@@ -57,12 +57,12 @@ public class JobData {
     /**
      * Returns results of search the jobs data by key/value, using
      * inclusion of the search term.
-     *
+     * <p>
      * For example, searching for employer "Enterprise" will include results
      * with "Enterprise Holdings, Inc".
      *
-     * @param column   Column that should be searched.
-     * @param value Value of teh field to search for
+     * @param column Column that should be searched.
+     * @param value  Value of teh field to search for
      * @return List of all jobs matching the criteria
      */
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
@@ -73,7 +73,6 @@ public class JobData {
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
         for (HashMap<String, String> row : allJobs) {
-
             String aValue = row.get(column);
 
             if (aValue.contains(value)) {
@@ -83,6 +82,28 @@ public class JobData {
 
         return jobs;
     }
+
+    public static ArrayList<HashMap<String, String>> findByValue(String value) { //one arg cause only searching for value
+
+        // load data, if not already loaded
+        loadData();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>(); //creates empty array in new local variable to store and return jobs that match the search value
+
+        for (HashMap<String, String> hashMap : allJobs) { //outer for loop (  allJobs.forEach((HashMap<String, String>hashMap)->{loop body})  )
+            // iterating over the array of HashMap elements, store reference to each HashMap in local variable hashMap (gives me one job at a time)
+            for (String entry : hashMap.values()) { //inner for loop iterating over each element in the HashMap values array (looks at values for that one job)
+                if (entry.contains(value)) { //if that one job has a value that matches search
+                    jobs.add(hashMap); //then add it to my return ArrayList
+                    break; //stop inner loop and move on to next job using outer loop (avoids duplicates)
+                }
+            }
+        }
+        return jobs; //after we go thru all elements in ArrayList allJobs looping ends and we return ArrayList jobs
+    }
+
+
+
 
     /**
      * Read in data from a CSV file and store it in a list
