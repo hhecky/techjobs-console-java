@@ -36,9 +36,9 @@ public class JobData {
         ArrayList<String> values = new ArrayList<>();
 
         for (HashMap<String, String> row : allJobs) {
-            String aValue = row.get(field);  //added toLowerCase and it didn't work
+            String aValue = row.get(field);
 
-            if (!values.contains(aValue) && aValue.equalsIgnoreCase(String.valueOf(values))) { //was just part before &&
+            if (!values.contains(aValue)) {
                 values.add(aValue);
             }
         }
@@ -75,7 +75,7 @@ public class JobData {
         for (HashMap<String, String> row : allJobs) {
             String aValue = row.get(column);
 
-            if (aValue.contains(value) && aValue.equalsIgnoreCase(String.valueOf(value))) { //was just part before &&
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -93,7 +93,7 @@ public class JobData {
         for (HashMap<String, String> hashMap : allJobs) { //outer for loop (  allJobs.forEach((HashMap<String, String>hashMap)->{loop body})  )
             // iterating over the array of HashMap elements, store reference to each HashMap in local variable hashMap (gives me one job at a time)
             for (String entry : hashMap.values()) { //inner for loop iterating over each element in the HashMap values array (looks at values for that one job)
-                if (entry.contains(value) && entry.equalsIgnoreCase(String.valueOf(value))) { //was just part before && //if that one job has a value that matches search
+                if (entry.toLowerCase().contains(value.toLowerCase())) { //added toLowerCase() to both entry and value which still doesn't work//if that one job has a value that matches search
                     jobs.add(hashMap); //then add it to my return ArrayList
                     break; //stop inner loop and move on to next job using outer loop (avoids duplicates)
                 }
